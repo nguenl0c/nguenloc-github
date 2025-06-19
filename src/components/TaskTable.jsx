@@ -97,7 +97,7 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
       <table
         ref={tableRef}
         className="min-w-full border border-gray-300 table-fixed shadow-[5px_0_15px_rgba(0,0,0,0.1)]"
-        
+        style={{ width: `${totalWidth}px` }}
       >
         <thead>
           <tr className="bg-white border-b-2 border-gray-400 text-sm text-left">
@@ -173,7 +173,7 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
               </div>
             </th>{" "}
             <th
-              className="px-4 py-2"
+              className="px-4 py-2 border-r border-gray-300 relative"
               style={{ width: `${columnWidths.size}px` }}
             >
               Size
@@ -184,6 +184,7 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 ></div>
               </div>
             </th>
+            <th className="px-4 py-2"></th>
           </tr>
         </thead>{" "}
         <tbody>
@@ -216,6 +217,7 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
               <td className="px-4 py-2 border-r border-gray-300">
                 {task.size}
               </td>
+              <td className="px-4 py-2"></td>
             </tr>
           ))}
         </tbody>
