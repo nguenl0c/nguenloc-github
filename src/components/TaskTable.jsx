@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import Dropdown from './DropDown';
 
 // Component StatusBadge với màu sắc và icon
 function StatusBadge({ status }) {
@@ -38,6 +39,10 @@ function StatusBadge({ status }) {
     </span>
   );
 }
+
+const STATUS_OPTIONS = ['Todo', 'In Progress', 'Done', 'No Status'];
+const PRIORITY_OPTIONS = ['Low', 'Medium', 'High'];
+const SIZE_OPTIONS = ['XS', 'S', 'M', 'L', 'XL'];
 
 export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
   // State để lưu trữ width của các cột
@@ -90,6 +95,14 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
     resizingColumn.current = null;
     document.removeEventListener('mousemove', handleMouseMove);
     document.removeEventListener('mouseup', handleMouseUp);
+  };
+
+  const handleTaskUpdate = (taskId, field, newValue) => {
+    onUpdateTask(taskId, { [field]: newValue });
+    console.log(
+      `Cập nhật task ID: ${taskId}, trường: ${field}, giá trị mới: ${newValue}`
+    );
+    alert(`Đã cập nhật task ID: ${taskId}, ${field} thành ${newValue}`);
   };
 
   return (
@@ -206,7 +219,15 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 {task.assignees.join(", ")}
               </td>{" "}
               <td className="px-4 py-2 border-r border-gray-300">
-                <StatusBadge status={task.status} />
+                <div className="flex items-center justify-between">
+                  <StatusBadge status={task.status} />
+                  <Dropdown
+                    options={STATUS_OPTIONS}
+                    onValueChange={(newValue) =>
+                      handleTaskUpdate(task.id, "status", newValue)
+                    }
+                  />
+                </div>
               </td>
               <td className="px-4 py-2 border-r border-gray-300">
                 {task.priority}
