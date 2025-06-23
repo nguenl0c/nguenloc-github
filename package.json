@@ -1,7 +1,6 @@
 {
   "private": true,
   "type": "module",
-  "homepage": "https://nguenl0c.github.io/my-clone-github",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
