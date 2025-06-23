@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import TaskTable from '../../components/TaskTable.jsx';
-import TaskBoard from '../../components/TaskBoard.jsx';
-import TaskForm from '../../components/TaskForm.jsx';
-import ViewSwitcher from '../../components/ViewSwitcher.jsx';
-import TaskFilters from '../../components/TaskFilters.jsx';
-import { useTasks } from '../../hooks/useTasks.js';
+import TaskTable from '../components/TaskTable.jsx';
+import TaskBoard from '../components/TaskBoard.jsx';
+import TaskForm from '../components/TaskForm.jsx';
+import ViewSwitcher from '../components/ViewSwitcher.jsx';
+import TaskFilters from '../components/TaskFilters.jsx';
+import { useTasks } from '../hooks/useTasks.js';
 
 export function Home() {
   const {
@@ -46,7 +46,7 @@ export function Home() {
       {/* Header Section */}
       <div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6'>
         <div>
-          <h1 className='text-3xl font-bold text-gray-900'>nguenl0c's project reactJS</h1>
+          <h1 className='text-xl font-extraboldd text-gray-900'>nguenl0c's project reactJS</h1>
         </div>
 
         <div className='flex items-center gap-4'>

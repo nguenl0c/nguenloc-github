@@ -23,7 +23,7 @@ function StatusBadge({ status }) {
       default:
         return {
           color: 'bg-gray-100 text-gray-800 border-gray-300',
-          label: status,
+          label: 'No Status',
         };
     }
   };
@@ -47,13 +47,13 @@ const SIZE_OPTIONS = ['XS', 'S', 'M', 'L', 'XL'];
 export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
   // State để lưu trữ width của các cột
   const [columnWidths, setColumnWidths] = useState({
-    index: 32, // w-16
-    title: 350, // w-80
-    assignees: 200, // w-48
-    status: 200, // w-32
-    priority: 200, // w-28
-    estimate: 200, // w-24
-    size: 200, // w-20
+    index: 32, 
+    title: 350, 
+    assignees: 200,
+    status: 200,
+    priority: 150,
+    estimate: 100, 
+    size: 200,
   });
 
   const tableRef = useRef(null);
@@ -102,11 +102,10 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
     console.log(
       `Cập nhật task ID: ${taskId}, trường: ${field}, giá trị mới: ${newValue}`
     );
-    alert(`Đã cập nhật task ID: ${taskId}, ${field} thành ${newValue}`);
   };
 
   return (
-    <div className="overflow-x-auto bg-white ">
+    <div className="overflow-x-auto bg-white">
       <table
         ref={tableRef}
         className="min-w-full border border-gray-300 table-fixed shadow-[5px_0_15px_rgba(0,0,0,0.1)]"
@@ -126,7 +125,7 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
               </div>
             </th>
             <th
-              className="px-4 py-2 border-r border-gray-300 relative"
+              className="px-4 py-2 border-r border-gray-300 relative truncate"
               style={{ width: `${columnWidths.title}px` }}
             >
               Title
@@ -137,8 +136,9 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 ></div>
               </div>
             </th>
+
             <th
-              className="px-4 py-2 border-r border-gray-300 relative"
+              className="px-4 py-2 border-r border-gray-300 relative truncate"
               style={{ width: `${columnWidths.assignees}px` }}
             >
               Assignees
@@ -149,8 +149,9 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 ></div>
               </div>
             </th>
+
             <th
-              className="px-4 py-2 border-r border-gray-300 relative"
+              className="px-4 py-2 border-r border-gray-300 relative truncate"
               style={{ width: `${columnWidths.status}px` }}
             >
               Status
@@ -161,8 +162,9 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 ></div>
               </div>
             </th>
+
             <th
-              className="px-4 py-2 border-r border-gray-300 relative"
+              className="px-4 py-2 border-r border-gray-300 relative truncate"
               style={{ width: `${columnWidths.priority}px` }}
             >
               Priority
@@ -173,8 +175,9 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 ></div>
               </div>
             </th>
+
             <th
-              className="px-4 py-2 border-r border-gray-300 relative"
+              className="px-4 py-2 border-r border-gray-300 relative truncate"
               style={{ width: `${columnWidths.estimate}px` }}
             >
               Estimate
@@ -185,8 +188,9 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 ></div>
               </div>
             </th>{" "}
+
             <th
-              className="px-4 py-2 border-r border-gray-300 relative"
+              className="px-4 py-2 border-r border-gray-300 relative truncate"
               style={{ width: `${columnWidths.size}px` }}
             >
               Size
@@ -218,7 +222,7 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
               >
                 {task.assignees.join(", ")}
               </td>{" "}
-              <td className="px-4 py-2 border-r border-gray-300">
+              <td className="px-4 py-2 border-r border-gray-300 truncate">
                 <div className="flex items-center justify-between">
                   <StatusBadge status={task.status} />
                   <Dropdown
@@ -230,13 +234,29 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 </div>
               </td>
               <td className="px-4 py-2 border-r border-gray-300">
-                {task.priority}
+                <div className="flex items-center justify-between">
+                  {task.priority}
+                  <Dropdown
+                    options={PRIORITY_OPTIONS}
+                    onValueChange={(newValue) =>
+                      handleTaskUpdate(task.id, "priority", newValue)
+                    }
+                  />
+                </div>
               </td>
               <td className="px-4 py-2 border-r border-gray-300">
                 {task.estimate}
               </td>
               <td className="px-4 py-2 border-r border-gray-300">
-                {task.size}
+                <div className="flex items-center justify-between">
+                  {task.size}
+                  <Dropdown
+                    options={SIZE_OPTIONS}
+                    onValueChange={(newValue) =>
+                      handleTaskUpdate(task.id, "size", newValue)
+                    }
+                  />
+                </div>
               </td>
               <td className="px-4 py-2"></td>
             </tr>
