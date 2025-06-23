@@ -1,10 +1,15 @@
 {
+  "name": "my-clone-github",
   "private": true,
   "type": "module",
+  "version": "1.0.0",
+  "homepage": "https://nguenl0c.github.io/my-clone-github/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-react": "^9.5.0",
@@ -21,6 +26,7 @@
     "@tailwindcss/postcss": "^4.1.7",
     "autoprefixer": "^10.4.21",
     "eslint": "^8.57.1",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "tailwindcss": "^4.1.7",
