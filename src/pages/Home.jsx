@@ -4,7 +4,8 @@ import TaskBoard from '../components/TaskBoard.jsx';
 import TaskForm from '../components/TaskForm.jsx';
 import ViewSwitcher from '../components/ViewSwitcher.jsx';
 import TaskFilters from '../components/TaskFilters.jsx';
-import { useTasks } from '../hooks/useTasks.js';
+import { useTasks } from "../hooks/useTasks.js";
+// import { useTasksOptimized } from "../hooks/useTasksOptimized.js";
 
 export function Home() {
   const {

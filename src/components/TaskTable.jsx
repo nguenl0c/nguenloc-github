@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import Dropdown from './DropDown';
+import Dropdown from './Dropdown.jsx';
 
 // Component StatusBadge với màu sắc và icon
 function StatusBadge({ status }) {
@@ -222,7 +222,7 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
               >
                 {task.assignees.join(", ")}
               </td>{" "}
-              <td className="px-4 py-2 border-r border-gray-300 truncate">
+              <td className="px-4 py-2 border-r border-gray-300">
                 <div className="flex items-center justify-between">
                   <StatusBadge status={task.status} />
                   <Dropdown
