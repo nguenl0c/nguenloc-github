@@ -10,6 +10,8 @@ import { useTasks } from "../hooks/useTasks.js";
 export function Home() {
   const {
     tasks,
+    loading,
+    error,
     addTask,
     deleteTask,
     updateTask,

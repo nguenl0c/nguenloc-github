@@ -1,0 +1,117 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Tạo giao diện Table View",
+      "assignees": [
+        "Loc",
+        "An"
+      ],
+      "status": "Todo",
+      "priority": "Medium",
+      "estimate": 3,
+      "size": "M"
+    },
+    {
+      "id": "2",
+      "title": "Tích hợp Board View (Kanban)",
+      "assignees": [
+        "Binh"
+      ],
+      "status": "Done",
+      "priority": "Medium",
+      "estimate": 5,
+      "size": "L"
+    },
+    {
+      "id": "3",
+      "title": "Thêm chức năng CRUD Task",
+      "assignees": [
+        "Loc"
+      ],
+      "status": "Todo",
+      "priority": "Low",
+      "estimate": 2,
+      "size": "S"
+    },
+    {
+      "id": "4",
+      "title": "Tối ưu UI với Tailwind CSS",
+      "assignees": [
+        "An"
+      ],
+      "status": "Todo",
+      "priority": "High",
+      "estimate": 1,
+      "size": "XS"
+    },
+    {
+      "id": "5",
+      "title": "Tạo chức năng filter, sort",
+      "assignees": [
+        "Binh",
+        "Loc"
+      ],
+      "status": "In Progress",
+      "priority": "Medium",
+      "estimate": 4,
+      "size": "M"
+    },
+    {
+      "id": "6",
+      "title": "Implement Drag & Drop",
+      "assignees": [
+        "Developer"
+      ],
+      "status": "In Progress",
+      "priority": "High",
+      "estimate": 6,
+      "size": "L"
+    },
+    {
+      "id": "7",
+      "title": "Add Search Functionality",
+      "assignees": [
+        "Frontend Team"
+      ],
+      "status": "Done",
+      "priority": "Medium",
+      "estimate": 3,
+      "size": "M"
+    },
+    {
+      "id": "8",
+      "title": "Create View Switcher",
+      "assignees": [
+        "UI Team"
+      ],
+      "status": "Done",
+      "priority": "Low",
+      "estimate": 2,
+      "size": "S"
+    },
+    {
+      "id": "9",
+      "title": "Setup Testing Framework",
+      "assignees": [
+        "QA",
+        "Dev"
+      ],
+      "status": "Todo",
+      "priority": "High",
+      "estimate": 4,
+      "size": "L"
+    },
+    {
+      "id": "10",
+      "title": "Performance Optimization",
+      "assignees": [
+        "Senior Dev"
+      ],
+      "status": "In Progress",
+      "priority": "Medium",
+      "estimate": 8,
+      "size": "XL"
+    }
+  ]
+}

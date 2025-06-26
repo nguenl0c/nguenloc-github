@@ -53,7 +53,7 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
     status: 200,
     priority: 150,
     estimate: 100, 
-    size: 200,
+    size: 100,
   });
 
   const tableRef = useRef(null);
