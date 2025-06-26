@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import TaskTable from '../components/TaskTable.jsx';
 import TaskBoard from '../components/TaskBoard.jsx';
 import TaskForm from '../components/TaskForm.jsx';
@@ -20,8 +20,14 @@ export function Home() {
   } = useTasks();
 
   const [showTaskForm, setShowTaskForm] = useState(false);
-  const [currentView, setCurrentView] = useState('table');
+  const [currentView, setCurrentView] = useState(
+    () => localStorage.getItem("task-manager-view") || "table"
+  );
   const [newTaskStatus, setNewTaskStatus] = useState('Todo'); // Track status for new task
+
+  useEffect(() => {
+    localStorage.setItem("task-manager-view", currentView);
+  }, [currentView]);
 
   const handleFilterChange = (filterType, value) => {
     updateFilter(filterType, value);

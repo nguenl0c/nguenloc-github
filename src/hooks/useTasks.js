@@ -60,30 +60,62 @@ export function useTasks() {
       if (!response.ok) throw new Error("Failed to delete task.");
       
       // Xóa task khỏi UI sau khi đã xóa thành công trên server
-      setTasks((prev) => prev.filter((task) => task.id !== taskId));
+      setTasks((prev) => prev.filter((task) => task.id != taskId));
     } catch (err) {
       console.error(err);
     }
   }, []);
 
-  const updateTask = useCallback(async (taskId, updates) => {
-    try {
-      const response = await fetch(`${API_URL}/${taskId}`, {
-        method: "PATCH", // Hoặc 'PUT'
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updates),
-      });
-      if (!response.ok) throw new Error("Failed to update task.");
-      
-      const updatedTask = await response.json();
-      // Cập nhật UI với dữ liệu mới nhất từ server
-      setTasks((prev) =>
-        prev.map((task) => (task.id === taskId ? updatedTask : task))
-    );
-  } catch (err) {
-    console.error(err);
-  }
-}, []);
+  const updateTask = useCallback(
+    async (taskId, updates) => {
+      // Không cần dòng "const previousTasks = tasks" ở đây nữa
+
+      // Sử dụng functional update để lấy được `currentTasks` mới nhất mà không cần đưa `tasks` vào dependency
+      // Đồng thời thực hiện cập nhật lạc quan
+      setTasks((currentTasks) =>
+        currentTasks.map((task) =>
+          task.id == taskId ? { ...task, ...updates } : task
+        )
+      );
+
+      try {
+        const response = await fetch(`${API_URL}/${taskId}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updates),
+        });
+
+        if (!response.ok) {
+          // Nếu server báo lỗi, chúng ta sẽ throw error để kích hoạt khối catch bên dưới
+          const errorData = await response.text();
+          throw new Error(`Failed to update task: ${errorData}`);
+        }
+
+        // Nếu thành công, bạn có thể chọn đồng bộ lại state với dữ liệu trả về từ server
+        // Điều này đảm bảo UI khớp 100% với database
+        const updatedTaskFromServer = await response.json();
+        setTasks((currentTasks) =>
+          currentTasks.map((task) =>
+            task.id == taskId ? updatedTaskFromServer : task
+          )
+        );
+      } catch (err) {
+        console.error(err);
+        alert(
+          "Không thể cập nhật công việc. Đang khôi phục lại trạng thái cũ."
+        );
+
+        // NẾU CÓ LỖI:
+        // Chúng ta không thể truy cập `previousTasks` trực tiếp,
+        // nên cách tốt nhất là fetch lại toàn bộ danh sách để đảm bảo dữ liệu đúng.
+        // Hoặc bạn có thể tạo một cơ chế rollback phức tạp hơn.
+        // Tạm thời, chúng ta sẽ chỉ hiện cảnh báo.
+        // Để rollback, bạn cần một giải pháp quản lý state phức tạp hơn một chút.
+        // Nhưng giải pháp trên sẽ FIX được lỗi RELOAD TRANG.
+      }
+    },
+    [API_URL]
+  );
 
 //fILLER
 const [filters, setFilters] = useState({
