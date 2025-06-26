@@ -47,12 +47,12 @@ const SIZE_OPTIONS = ['XS', 'S', 'M', 'L', 'XL'];
 export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
   // State để lưu trữ width của các cột
   const [columnWidths, setColumnWidths] = useState({
-    index: 32, 
-    title: 350, 
+    index: 32,
+    title: 350,
     assignees: 200,
     status: 200,
     priority: 150,
-    estimate: 100, 
+    estimate: 100,
     size: 100,
   });
 
@@ -68,23 +68,27 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
     0
   );
 
+  //Tạo thêm state để quản lý việc chỉnh sửa ô
+  const [editingCell, setEditingCell] = useState(null);
+  const [editValue, setEditValue] = useState("");
+
   const handleMouseDown = (e, column) => {
     isResizing.current = true;
     resizingColumn.current = column;
     startX.current = e.clientX;
     startWidth.current = columnWidths[column];
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
     e.preventDefault();
   };
 
-  const handleMouseMove = e => {
+  const handleMouseMove = (e) => {
     if (!isResizing.current) return;
 
     const diff = e.clientX - startX.current;
     const newWidth = Math.max(50, startWidth.current + diff);
-    setColumnWidths(prev => ({
+    setColumnWidths((prev) => ({
       ...prev,
       [resizingColumn.current]: newWidth,
     }));
@@ -93,14 +97,87 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
   const handleMouseUp = () => {
     isResizing.current = false;
     resizingColumn.current = null;
-    document.removeEventListener('mousemove', handleMouseMove);
-    document.removeEventListener('mouseup', handleMouseUp);
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
   };
 
   const handleTaskUpdate = (taskId, field, newValue) => {
     onUpdateTask(taskId, { [field]: newValue });
     console.log(
       `Cập nhật task ID: ${taskId}, trường: ${field}, giá trị mới: ${newValue}`
+    );
+  };
+
+  // --- CÁC HÀM XỬ LÝ MỚI ---
+  const handleDoubleClick = (task, field) => {
+    setEditingCell({ taskId: task.id, field });
+    // Đối với mảng assignees, ta join lại để chỉnh sửa
+    const currentValue =
+      field === "assignees" ? task.assignees.join(", ") : task[field];
+    setEditValue(currentValue);
+  };
+
+  const handleUpdate = () => {
+    if (!editingCell) return;
+
+    const { taskId, field } = editingCell;
+    const originalTask = tasks.find((t) => t.id === taskId);
+
+    // Xử lý giá trị trước khi gửi đi
+    let finalValue = editValue;
+    if (field === "assignees") {
+      finalValue = editValue
+        .split(",")
+        .map((name) => name.trim())
+        .filter(Boolean);
+    } else if (field === "estimate") {
+      finalValue = parseInt(editValue, 10) || 0;
+    }
+
+    // Chỉ cập nhật nếu có sự thay đổi
+    if (JSON.stringify(finalValue) !== JSON.stringify(originalTask[field])) {
+      onUpdateTask(taskId, { [field]: finalValue });
+    }
+
+    setEditingCell(null); // Thoát khỏi chế độ chỉnh sửa
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleUpdate();
+    } else if (e.key === "Escape") {
+      setEditingCell(null); // Hủy bỏ chỉnh sửa
+    }
+  };
+
+  const renderEditableCell = (task, field) => {
+    const isEditing =
+      editingCell &&
+      editingCell.taskId === task.id &&
+      editingCell.field === field;
+
+    if (isEditing) {
+      return (
+        <input
+          type={field === "estimate" ? "number" : "text"}
+          value={editValue}
+          onChange={(e) => setEditValue(e.target.value)}
+          onKeyDown={handleKeyDown}
+          onBlur={handleUpdate} // Tự động lưu khi click ra ngoài
+          autoFocus // Tự động focus vào input
+          className="w-full h-full p-1 box-border bg-white border-2 border-blue-500 rounded outline-none"
+        />
+      );
+    }
+
+    // Hiển thị bình thường
+    return (
+      <div
+        className="w-full h-full truncate p-1"
+        onDoubleClick={() => handleDoubleClick(task, field)}
+      >
+        {field === "assignees" ? task.assignees.join(", ") : task[field]}
+      </div>
     );
   };
 
@@ -136,7 +213,6 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 ></div>
               </div>
             </th>
-
             <th
               className="px-4 py-2 border-r border-gray-300 relative truncate"
               style={{ width: `${columnWidths.assignees}px` }}
@@ -149,7 +225,6 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 ></div>
               </div>
             </th>
-
             <th
               className="px-4 py-2 border-r border-gray-300 relative truncate"
               style={{ width: `${columnWidths.status}px` }}
@@ -162,7 +237,6 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 ></div>
               </div>
             </th>
-
             <th
               className="px-4 py-2 border-r border-gray-300 relative truncate"
               style={{ width: `${columnWidths.priority}px` }}
@@ -175,7 +249,6 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 ></div>
               </div>
             </th>
-
             <th
               className="px-4 py-2 border-r border-gray-300 relative truncate"
               style={{ width: `${columnWidths.estimate}px` }}
@@ -188,7 +261,6 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 ></div>
               </div>
             </th>{" "}
-
             <th
               className="px-4 py-2 border-r border-gray-300 relative truncate"
               style={{ width: `${columnWidths.size}px` }}
@@ -204,6 +276,8 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
             <th className="px-4 py-2"></th>
           </tr>
         </thead>{" "}
+
+
         <tbody>
           {tasks.map((task, idx) => (
             <tr key={task.id} className="border-t border-gray-400 ">
@@ -220,7 +294,7 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 className="px-4 py-2 border-r border-gray-300 truncate"
                 title={task.assignees.join(", ")}
               >
-                {task.assignees.join(", ")}
+                {renderEditableCell(task, "assignees")}
               </td>{" "}
               <td className="px-4 py-2 border-r border-gray-300">
                 <div className="flex items-center justify-between">

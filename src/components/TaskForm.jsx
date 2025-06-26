@@ -137,13 +137,13 @@ export default function TaskForm({ onAddTask, onClose }) {
     e.preventDefault();
     if (!formData.title.trim()) return;
     const newTask = {
-      id: Date.now(),
+      id: Date.now().toString(),
       title: formData.title,
       description: formData.description,
       assignees: formData.assignees
-        .split(",")
-        .map((a) => a.trim())
-        .filter((a) => a),
+      .split(",")
+      .map((a) => a.trim())
+      .filter((a) => a),
       status: formData.status,
       priority: formData.priority,
       estimate: parseInt(formData.estimate),

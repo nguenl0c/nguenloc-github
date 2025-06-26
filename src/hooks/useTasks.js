@@ -48,7 +48,6 @@ export function useTasks() {
       setTasks((prev) => [...prev, createdTask]);
     } catch (err) {
       console.error(err);
-      // Có thể thêm logic xử lý lỗi ở đây, ví dụ: alert(err.message);
     }
   }, []);
   

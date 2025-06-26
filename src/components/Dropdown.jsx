@@ -19,7 +19,7 @@ export default function Dropdown({ options, onValueChange }) {
 
             // Đặt vị trí ngay dưới nút bấm và căn lề phải
             setMenuPosition({
-                top: rect.bottom + window.scrollY + 2, // Thêm 2px khoảng cách
+                top: rect.bottom + window.scrollY + 8,
                 left: rect.right + window.scrollX - menuWidth,
             });
         }
@@ -39,7 +39,7 @@ export default function Dropdown({ options, onValueChange }) {
                 !menuRef.current.contains(event.target)
             ) {
                 setIsOpen(false);
-            }
+            }   
         };
 
         const handleScroll = () => {
