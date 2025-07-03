@@ -44,7 +44,7 @@ export default function StatusColumn({
 
   return (
     <div
-      className={`min-h-96 w-95 bg-[#f7f8fa] rounded-lg border-1 border-gray-300 transition-all duration-200 ${isDragOver ? "border-blue-400 bg-blue-50" : ""}`}
+      className={`min-h-96 min-w-80 bg-[#f7f8fa] rounded-lg border-1 border-gray-300 transition-all duration-200 ${isDragOver ? "border-blue-400 bg-blue-50" : ""}`}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}

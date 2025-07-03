@@ -7,7 +7,7 @@
         "Loc",
         "An"
       ],
-      "status": "Done",
+      "status": "Bug",
       "priority": "High",
       "estimate": 3,
       "size": "M"
@@ -29,7 +29,7 @@
       "assignees": [
         "Loc"
       ],
-      "status": "No Status",
+      "status": "In Progress",
       "priority": "Low",
       "estimate": 2,
       "size": "S"
@@ -74,7 +74,7 @@
       "assignees": [
         "Frontend Team"
       ],
-      "status": "In Progress",
+      "status": "Done",
       "priority": "Medium",
       "estimate": 3,
       "size": "M"
@@ -97,7 +97,7 @@
       "assignees": [
         "Bob"
       ],
-      "status": "Todo",
+      "status": "In Progress",
       "priority": "Low",
       "estimate": 2,
       "size": "M"
@@ -110,7 +110,7 @@
         "Hoàng",
         "Long"
       ],
-      "status": "In Progress",
+      "status": "Todo",
       "priority": "High",
       "estimate": 3,
       "size": "S"
@@ -126,6 +126,24 @@
       "priority": "Low",
       "estimate": 1,
       "size": "XL"
+    }
+  ],
+  "statuses": [
+    {
+      "id": 1,
+      "name": "Todo"
+    },
+    {
+      "id": 2,
+      "name": "In Progress"
+    },
+    {
+      "id": 3,
+      "name": "Done"
+    },
+    {
+      "id": "de1f",
+      "name": "Bug"
     }
   ]
 }

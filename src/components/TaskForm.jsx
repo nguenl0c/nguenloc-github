@@ -41,7 +41,7 @@ import {
 } from "ckeditor5";
 import "ckeditor5/ckeditor5.css";
 
-export default function TaskForm({ onAddTask, onClose }) {
+export default function TaskForm({ onAddTask, onClose, statuses = [] }) {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
@@ -54,7 +54,7 @@ export default function TaskForm({ onAddTask, onClose }) {
 
   // Bước 2: Dán License Key và cấu hình vào đây
   const LICENSE_KEY =
-    "eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NTE0MTQzOTksImp0aSI6IjQwYjljNGJjLTMwNWYtNDI5Mi1iMGU2LTkwODJlZDBhNzJjMyIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjY1YTlmMGM5In0.AEF3bMx_BHuo8nGThI4HgVCQJXiLdb4lmOru5Cx6IfwdwoG6rwzOCoqdX_ETktm_ruCpesCn85cTJSGPLlUyqw";
+    "eyJleHAiOjE3ODE3NDA3OTksImp0aSI6IjNlMTEyNWVlLWNkN2YtNDE1ZS1hYjNjLWY1MzNkNGI3Njg3MSIsImxpY2Vuc2VkSG9zdHMiOlsiMTI3LjAuMC4xIiwibG9jYWxob3N0IiwiMTkyLjE2OC4qLioiLCIxMC4qLiouKiIsIjE3Mi4qLiouKiIsIioudGVzdCIsIioubG9jYWxob3N0IiwiKi5sb2NhbCJdLCJ1c2FnZUVuZHBvaW50IjoiaHR0cHM6Ly9wcm94eS1ldmVudC5ja2VkaXRvci5jb20iLCJkaXN0cmlidXRpb25DaGFubmVsIjpbImNsb3VkIiwiZHJ1cGFsIl0sImxpY2Vuc2VUeXBlIjoiZGV2ZWxvcG1lbnQiLCJmZWF0dXJlcyI6WyJEUlVQIiwiRTJQIiwiRTJXIl0sInZjIjoiNzljNzA4MzgifQ.eyJleHAiOjE3NTE0MTQzOTksImp0aSI6IjQwYjljNGJjLTMwNWYtNDI5Mi1iMGU2LTkwODJlZDBhNzJjMyIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6IjY1YTlmMGM5In0.AEF3bMx_BHuo8nGThI4HgVCQJXiLdb4lmOru5Cx6IfwdwoG6rwzOCoqdX_ETktm_ruCpesCn85cTJSGPLlUyqw";
 
   const editorConfig = useMemo(
     () => ({
@@ -220,9 +220,11 @@ export default function TaskForm({ onAddTask, onClose }) {
                 onChange={handleChange}
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               >
-                <option value="Todo">Todo</option>
-                <option value="In Progress">In Progress</option>
-                <option value="Done">Done</option>
+                {statuses.map((statuses) => (
+                  <option key={status} value={status}>
+                    {status}
+                  </option>
+                ))}
               </select>
             </div>
             <div>

@@ -40,11 +40,10 @@ function StatusBadge({ status }) {
   );
 }
 
-const STATUS_OPTIONS = ['Todo', 'In Progress', 'Done', 'No Status'];
 const PRIORITY_OPTIONS = ['Low', 'Medium', 'High'];
 const SIZE_OPTIONS = ['XS', 'S', 'M', 'L', 'XL'];
 
-export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
+export default function TaskTable({ tasks = [], statuses = [], onDeleteTask, onUpdateTask }) {
   // State để lưu trữ width của các cột
   const [columnWidths, setColumnWidths] = useState({
     index: 32,
@@ -300,7 +299,7 @@ export default function TaskTable({ tasks = [], onDeleteTask, onUpdateTask }) {
                 <div className="flex items-center justify-between">
                   <StatusBadge status={task.status} />
                   <Dropdown
-                    options={STATUS_OPTIONS}
+                    options={statuses}
                     onValueChange={(newValue) =>
                       handleTaskUpdate(task.id, "status", newValue)
                     }

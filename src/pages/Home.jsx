@@ -4,15 +4,17 @@ import TaskBoard from '../components/TaskBoard.jsx';
 import TaskForm from '../components/TaskForm.jsx';
 import ViewSwitcher from '../components/ViewSwitcher.jsx';
 import TaskFilters from '../components/TaskFilters.jsx';
-import { useTasks } from "../hooks/useTasks.js";
+import { useTasks } from "../hooks/useTasksOptimized.js";
 // import { useTasksOptimized } from "../hooks/useTasksOptimized.js";
 
 export function Home() {
   const {
     tasks,
+    statuses, 
     loading,
     error,
     addTask,
+    addStatus,
     deleteTask,
     updateTask,
     updateFilter,
@@ -88,6 +90,7 @@ export function Home() {
           <div className='w-full overflow-x-auto'>
             <TaskTable
               tasks={tasks}
+              statuses={statuses}
               onDeleteTask={deleteTask}
               onUpdateTask={updateTask}
             />
@@ -96,9 +99,11 @@ export function Home() {
           <div className='w-full overflow-x-auto'>
             <TaskBoard
               tasks={tasks}
+              statuses={statuses}
               onDeleteTask={deleteTask}
               onUpdateTask={updateTask}
               onAddTask={handleAddTaskFromBoard}
+              onAddStatus={addStatus}
             />
           </div>
         )}
@@ -106,7 +111,7 @@ export function Home() {
 
       {/* Task Form Modal */}
       {showTaskForm && (
-        <TaskForm onAddTask={handleAddTask} onClose={() => setShowTaskForm(false)} />
+        <TaskForm onAddTask={handleAddTask} onClose={() => setShowTaskForm(false)} statuses={statuses} />
       )}
     </div>
   );
