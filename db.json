@@ -7,7 +7,7 @@
         "Loc",
         "An"
       ],
-      "status": "Bug",
+      "status": "Todo",
       "priority": "High",
       "estimate": 3,
       "size": "M"
@@ -52,7 +52,7 @@
         "Binh",
         "Loc"
       ],
-      "status": "In Progress",
+      "status": "Done",
       "priority": "High",
       "estimate": 4,
       "size": "M"
@@ -74,7 +74,7 @@
       "assignees": [
         "Frontend Team"
       ],
-      "status": "Done",
+      "status": "Bug",
       "priority": "Medium",
       "estimate": 3,
       "size": "M"
@@ -97,7 +97,7 @@
       "assignees": [
         "Bob"
       ],
-      "status": "In Progress",
+      "status": "Tẻn tẻn",
       "priority": "Low",
       "estimate": 2,
       "size": "M"
@@ -110,7 +110,7 @@
         "Hoàng",
         "Long"
       ],
-      "status": "Todo",
+      "status": "Tẻn tẻn",
       "priority": "High",
       "estimate": 3,
       "size": "S"
@@ -126,24 +126,50 @@
       "priority": "Low",
       "estimate": 1,
       "size": "XL"
+    },
+    {
+      "id": "1751882581422",
+      "title": "fomo",
+      "description": "",
+      "assignees": [
+        "Tôi đây"
+      ],
+      "status": "Tẻn tẻn",
+      "priority": "High",
+      "estimate": 2,
+      "size": "XL"
     }
   ],
   "statuses": [
     {
-      "id": 1,
-      "name": "Todo"
+      "id": "1",
+      "name": "Todo",
+      "color": "green"
     },
     {
-      "id": 2,
-      "name": "In Progress"
+      "id": "2",
+      "name": "In Progress",
+      "color": "yellow"
     },
     {
-      "id": 3,
-      "name": "Done"
+      "id": "3",
+      "name": "Done",
+      "color": "purple"
     },
     {
       "id": "de1f",
-      "name": "Bug"
+      "name": "Bug",
+      "color": "red"
+    },
+    {
+      "id": "83dc",
+      "name": "Tẻn tẻn",
+      "color": "pink"
+    },
+    {
+      "id": "cd95",
+      "name": "cột mới",
+      "color": "blue"
     }
   ]
 }

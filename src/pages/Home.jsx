@@ -53,9 +53,9 @@ export function Home() {
   };
 
   return (
-    <div className='p-4 mx-auto'>
+    <div className='mx-auto'>
       {/* Header Section */}
-      <div className='flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6'>
+      <div className='flex flex-col px-4 pt-4 md:flex-row justify-between items-start md:items-center gap-4 mb-6'>
         <div>
           <h1 className='text-xl font-extraboldd text-gray-900'>nguenl0c's project reactJS</h1>
         </div>

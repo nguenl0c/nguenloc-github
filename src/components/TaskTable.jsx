@@ -1,49 +1,14 @@
 import React, { useState, useRef } from 'react';
 import Dropdown from './Dropdown.jsx';
+import StatusBadge from './StatusBadge.jsx';
 
-// Component StatusBadge với màu sắc và icon
-function StatusBadge({ status }) {
-  const getStatusConfig = status => {
-    switch (status) {
-      case 'Todo':
-        return {
-          color: 'bg-green-100 text-green-800 border-green-300',
-          label: 'Todo',
-        };
-      case 'In Progress':
-        return {
-          color: 'bg-yellow-100 text-yellow-800 border-yellow-300',
-          label: 'In Progress',
-        };
-      case 'Done':
-        return {
-          color: 'bg-purple-100 text-purple-800 border-purple-300',
-          label: 'Done',
-        };
-      default:
-        return {
-          color: 'bg-gray-100 text-gray-800 border-gray-300',
-          label: 'No Status',
-        };
-    }
-  };
-
-  const config = getStatusConfig(status);
-
-  return (
-    <span
-      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${config.color}`}
-    >
-      <span className='mr-1 text-sm'>{config.icon}</span>
-      {config.label}
-    </span>
-  );
-}
 
 const PRIORITY_OPTIONS = ['Low', 'Medium', 'High'];
 const SIZE_OPTIONS = ['XS', 'S', 'M', 'L', 'XL'];
 
 export default function TaskTable({ tasks = [], statuses = [], onDeleteTask, onUpdateTask }) {
+
+  console.log("TaskTable props:", { tasks, statuses });
   // State để lưu trữ width của các cột
   const [columnWidths, setColumnWidths] = useState({
     index: 32,
@@ -278,7 +243,11 @@ export default function TaskTable({ tasks = [], statuses = [], onDeleteTask, onU
 
 
         <tbody>
-          {tasks.map((task, idx) => (
+          {tasks.map((task, idx) => {
+            const taskStatusObject = statuses.find(
+              (s) => s.name === task.status
+            );
+            return (
             <tr key={task.id} className="border-t border-gray-400 ">
               <td className="px-4 py-2 border-gray-300 text-right">
                 {idx + 1}
@@ -295,11 +264,12 @@ export default function TaskTable({ tasks = [], statuses = [], onDeleteTask, onU
               >
                 {renderEditableCell(task, "assignees")}
               </td>{" "}
+
               <td className="px-4 py-2 border-r border-gray-300">
                 <div className="flex items-center justify-between">
-                  <StatusBadge status={task.status} />
+                  <StatusBadge statusObject={taskStatusObject} />
                   <Dropdown
-                    options={statuses}
+                    options={statuses.map(s => s.name)}
                     onValueChange={(newValue) =>
                       handleTaskUpdate(task.id, "status", newValue)
                     }
@@ -333,7 +303,8 @@ export default function TaskTable({ tasks = [], statuses = [], onDeleteTask, onU
               </td>
               <td className="px-4 py-2"></td>
             </tr>
-          ))}
+            );
+          })}
         </tbody>
       </table>
     </div>

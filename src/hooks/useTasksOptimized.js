@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 // import { tasks as initialTasks } from '../data/tasks.js';
 
-const API_URL = "http://localhost:3004/tasks";
+const API_URL = "http://localhost:3004";
 
 // Giả sử bạn cũng có thể lưu và tải statuses từ API trong tương lai
 // const STATUS_API_URL = "http://localhost:3004/statuses";
@@ -32,7 +32,7 @@ export function useTasks() {
         const statusData = await statusResponse.json();
 
         setTasks(taskData);
-        setStatuses(statusData.map(status => status.name)); 
+        setStatuses(statusData); 
 
       } catch (err) {
         console.error("Lỗi khi lấy dữ liệu:", err);
@@ -45,7 +45,7 @@ export function useTasks() {
   }, []);
 
   const addStatus = useCallback(
-    async (newStatusName) => {
+    async (newStatusName, colorName) => {
       if (!newStatusName || statuses.includes(newStatusName)) {
         alert(`Status "${newStatusName}" đã tồn tại hoặc không hợp lệ.`);
         return;
@@ -53,7 +53,7 @@ export function useTasks() {
 
       try {
         // Dữ liệu để gửi lên server
-        const newStatusObject = { name: newStatusName };
+        const newStatusObject = { name: newStatusName, color: colorName };
 
         const response = await fetch("http://localhost:3004/statuses", {
           method: "POST",

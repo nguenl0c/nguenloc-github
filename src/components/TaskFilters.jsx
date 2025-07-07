@@ -38,7 +38,7 @@ export default function TaskFilters({
   };
 
   return (
-    <div className="bg-white rounded-lg border p-4 mb-6">
+    <div className="bg-white rounded-lg px-3 py-4">
       <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
         {/* Search Input */}
         <div className="flex-1">
