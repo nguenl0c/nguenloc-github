@@ -66,7 +66,8 @@ export default function TaskCard({ task, onUpdateTask, onDeleteTask }) {
             <div className="flex justify-between items-center text-xs text-gray-500">
                 <div className="flex items-center gap-2">
                     <span className="flex items-center gap-1">
-                        <CircleIcon size={task.size} /> {task.size}
+                        {/* <CircleIcon size={task.size} /> {task.size} */}
+                        {task.size}
                     </span>
                     <span className="flex items-center gap-1">
                         <FiClock /> {task.estimate}h
