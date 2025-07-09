@@ -33,7 +33,7 @@ export default function TaskCard({ task, onUpdateTask, onDeleteTask }) {
             draggable
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
-            className={`bg-white rounded-lg p-4 mb-3 shadow-sm border-l-4 cursor-move transition-all duration-200 ${getPriorityColor(
+            className={`bg-white rounded-lg px-3 py-2 mb-3 shadow-sm border-l-4 cursor-move transition-all duration-200 ${getPriorityColor(
                 task.priority
             )} ${isDragging ? "opacity-50 rotate-2" : "hover:shadow-md"}`}
         >

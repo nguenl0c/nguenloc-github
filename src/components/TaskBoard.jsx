@@ -24,9 +24,9 @@ const AddColumn = ({ onAddStatus }) => {
         return (
             <button
                 onClick={() => setIsEditing(true)}
-                className="flex items-center justify-center w-10 h-8 bg-gray-100 rounded-lg border-1 border-gray-400 hover:bg-gray-200 hover:border-gray-400 transition-all text-gray-500"
+                className="flex items-center justify-center flex-none w-9 h-7 bg-gray-100 rounded-lg border-1 border-gray-400 hover:bg-gray-200 hover:border-gray-400 transition-all text-gray-900 hover:text-gray-700"
             >
-                <FiPlus/>
+                <FiPlus />
             </button>
         );
     }
@@ -48,7 +48,7 @@ const AddColumn = ({ onAddStatus }) => {
                     selectedColor={selectedColor}
                     onSelectColor={setSelectedColor}
                 />
-                
+
                 <div className="flex gap-2 mt-2">
                     <button
                         type="submit"
@@ -83,21 +83,19 @@ export default function TaskBoard({
     };
 
     return (
-        <div className="bg-white p-4 h-full flex flex-col">
-            <div className="flex gap-2 h-100vh overflow-x-auto">
-                {/*DÙNG `statuses.map` ĐỂ RENDER CÁC CỘT ĐỘNG */}
-                {statuses.map((statusObj) => (
-                    <StatusColumn
-                        key={statusObj.name} 
-                        statusObject={statusObj}
-                        tasks={getTasksByStatus(statusObj.name)}
-                        onUpdateTask={onUpdateTask}
-                        onDeleteTask={onDeleteTask}
-                        onAddTask={onAddTask}
-                    />
-                ))}
-                <AddColumn onAddStatus={onAddStatus} />
-            </div>
+        <div className="bg-white h-full flex flex-row gap-2 overflow-x-auto shadow-sm p-4">
+            {/*DÙNG `statuses.map` ĐỂ RENDER CÁC CỘT ĐỘNG */}
+            {statuses.map((statusObj) => (
+                <StatusColumn
+                    key={statusObj.name}
+                    statusObject={statusObj}
+                    tasks={getTasksByStatus(statusObj.name)}
+                    onUpdateTask={onUpdateTask}
+                    onDeleteTask={onDeleteTask}
+                    onAddTask={onAddTask}
+                />
+            ))}
+            <AddColumn onAddStatus={onAddStatus} />
         </div>
     );
 }

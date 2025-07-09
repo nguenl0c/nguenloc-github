@@ -40,7 +40,7 @@ export default function StatusColumn({
 
   return (
     <div
-      className={`w-80 h-auto bg-[#f7f8fa] rounded-lg border border-gray-300 flex flex-col flex-shrink-0 transition-all duration-200  ${isDragOver ? "border-blue-500 bg-blue-50" : ""}`}
+      className={`w-80 h-full min-h-full bg-[#f7f8fa] rounded-lg border border-gray-300 flex flex-col flex-shrink-0 transition-all duration-200  ${isDragOver ? "border-blue-500 bg-blue-50" : ""}`}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
@@ -55,6 +55,7 @@ export default function StatusColumn({
         </h3>
       </div>
 
+      {/* Vùng hiển thị tasks - flex-1 để chiếm hết không gian còn lại */}
       <div className="p-2 flex-1 overflow-y-auto">
         {tasks.map((task) => (
           <TaskCard
@@ -70,9 +71,13 @@ export default function StatusColumn({
             <p>No tasks yet</p>
           </div>
         )}
+      </div>
+
+      {/* Nút Add Task - cố định ở dưới cùng */}
+      <div className="p-2 flex-shrink-0">
         <button
           onClick={() => onAddTask && onAddTask(statusName)}
-          className="w-full mt-3 p-2 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-blue-400 hover:text-blue-500 transition-all flex items-center justify-center gap-2"
+          className="w-full p-2 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-blue-400 hover:text-blue-500 transition-all flex items-center justify-center gap-2"
         >
           <span className="text-lg">+</span>
           <span className="text-sm font-medium">Add Task</span>

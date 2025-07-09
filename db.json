@@ -52,7 +52,7 @@
         "Binh",
         "Loc"
       ],
-      "status": "Done",
+      "status": "Bug",
       "priority": "High",
       "estimate": 4,
       "size": "M"
@@ -85,7 +85,7 @@
       "assignees": [
         "UI Team"
       ],
-      "status": "Todo",
+      "status": "Done",
       "priority": "Low",
       "estimate": 2,
       "size": "S"
@@ -122,7 +122,7 @@
       "assignees": [
         "Lộc"
       ],
-      "status": "Done",
+      "status": "In Progress",
       "priority": "Low",
       "estimate": 1,
       "size": "XL"

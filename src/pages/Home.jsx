@@ -53,9 +53,9 @@ export function Home() {
   };
 
   return (
-    <div className='mx-auto'>
-      {/* Header Section */}
-      <div className='flex flex-col px-4 pt-4 md:flex-row justify-between items-start md:items-center gap-4 mb-6'>
+    <div className='mx-auto h-screen flex flex-col'>
+      {/* Header Section - không co giãn */}
+      <div className='flex-shrink-0 flex flex-col px-4 pt-4 md:flex-row justify-between items-start md:items-center gap-4 mb-6'>
         <div>
           <h1 className='text-xl font-extraboldd text-gray-900'>nguenl0c's project reactJS</h1>
         </div>
@@ -78,16 +78,18 @@ export function Home() {
         </div>
       </div>
 
-      {/* Filters */}
-      <TaskFilters
-        onFilterChange={handleFilterChange}
-        onSearchChange={handleSearchChange}
-      />
+      {/* Filters - không co giãn */}
+      <div className='flex-shrink-0'>
+        <TaskFilters
+          onFilterChange={handleFilterChange}
+          onSearchChange={handleSearchChange}
+        />
+      </div>
 
-      {/* Content Area */}
-      <div>
+      {/* Content Area - chiếm hết không gian còn lại */}
+      <div className='flex-1 overflow-hidden'>
         {currentView === 'table' ? (
-          <div className='w-full overflow-x-auto'>
+          <div className='w-full h-full overflow-auto'>
             <TaskTable
               tasks={tasks}
               statuses={statuses}
@@ -96,7 +98,7 @@ export function Home() {
             />
           </div>
         ) : (
-          <div className='w-full overflow-x-auto'>
+          <div className='w-full h-full overflow-hidden'>
             <TaskBoard
               tasks={tasks}
               statuses={statuses}
