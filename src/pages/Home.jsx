@@ -15,6 +15,8 @@ export function Home() {
     error,
     addTask,
     addStatus,
+    deleteStatus,
+    updateStatus,
     deleteTask,
     updateTask,
     updateFilter,
@@ -106,6 +108,8 @@ export function Home() {
               onUpdateTask={updateTask}
               onAddTask={handleAddTaskFromBoard}
               onAddStatus={addStatus}
+              onDeleteStatus={deleteStatus}
+              onUpdateStatus={updateStatus}
             />
           </div>
         )}

@@ -43,7 +43,7 @@
       "status": "Done",
       "priority": "High",
       "estimate": 1,
-      "size": "XS"
+      "size": "L"
     },
     {
       "id": "5",
@@ -52,7 +52,7 @@
         "Binh",
         "Loc"
       ],
-      "status": "Bug",
+      "status": "Todo",
       "priority": "High",
       "estimate": 4,
       "size": "M"
@@ -97,7 +97,7 @@
       "assignees": [
         "Bob"
       ],
-      "status": "Tẻn tẻn",
+      "status": "Done",
       "priority": "Low",
       "estimate": 2,
       "size": "M"
@@ -110,7 +110,7 @@
         "Hoàng",
         "Long"
       ],
-      "status": "Tẻn tẻn",
+      "status": "Bug",
       "priority": "High",
       "estimate": 3,
       "size": "S"
@@ -134,7 +134,7 @@
       "assignees": [
         "Tôi đây"
       ],
-      "status": "Tẻn tẻn",
+      "status": "Bug",
       "priority": "High",
       "estimate": 2,
       "size": "XL"
@@ -160,16 +160,6 @@
       "id": "de1f",
       "name": "Bug",
       "color": "red"
-    },
-    {
-      "id": "83dc",
-      "name": "Tẻn tẻn",
-      "color": "pink"
-    },
-    {
-      "id": "cd95",
-      "name": "cột mới",
-      "color": "blue"
     }
   ]
 }

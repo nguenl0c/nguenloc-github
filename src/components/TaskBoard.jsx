@@ -32,15 +32,15 @@ const AddColumn = ({ onAddStatus }) => {
     }
 
     return (
-        <div className="w-95 h-30 bg-[#f7f8fa] rounded-lg p-4 border-1 border-gray-400">
+        <div className="min-w-75 h-40 flex items-center justify-center bg-[#f7f8fa] rounded-lg p-4 border-1 border-gray-400">
             <form onSubmit={handleSubmit}>
                 <input
                     autoFocus
                     type="text"
                     value={columnName}
                     onChange={(e) => setColumnName(e.target.value)}
-                    placeholder="Enter column name..."
-                    className="w-full p-2 border rounded-md mb-2"
+                    placeholder="Label text *"
+                    className="w-full p-2 border rounded-md mb-4"
                 />
 
                 <ColorPicker
@@ -49,19 +49,17 @@ const AddColumn = ({ onAddStatus }) => {
                     onSelectColor={setSelectedColor}
                 />
 
-                <div className="flex gap-2 mt-2">
-                    <button
-                        type="submit"
-                        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                    >
-                        Create
-                    </button>
+                <div className="flex justify-end gap-2 mt-4">
                     <button
                         type="button"
                         onClick={() => setIsEditing(false)}
-                        className="px-4 py-2 bg-gray-200 rounded-md hover:bg-gray-300"
-                    >
+                        className="px-3 py-2 font-semibold bg-gray-200 rounded-md hover:bg-gray-300">
                         Cancel
+                    </button>
+                    <button
+                        type="submit"
+                        className="px-3 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600">
+                        Create
                     </button>
                 </div>
             </form>
@@ -77,6 +75,8 @@ export default function TaskBoard({
     onDeleteTask,
     onAddTask,
     onAddStatus,
+    onDeleteStatus,
+    onUpdateStatus,
 }) {
     const getTasksByStatus = (statusName) => {
         return tasks.filter((task) => task.status === statusName);
@@ -93,6 +93,8 @@ export default function TaskBoard({
                     onUpdateTask={onUpdateTask}
                     onDeleteTask={onDeleteTask}
                     onAddTask={onAddTask}
+                    onDeleteStatus={onDeleteStatus}
+                    onUpdateStatus={onUpdateStatus}
                 />
             ))}
             <AddColumn onAddStatus={onAddStatus} />

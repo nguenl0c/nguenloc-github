@@ -15,7 +15,7 @@ export default function Dropdown({ options, onValueChange }) {
     const handleToggle = () => {
         if (!isOpen && buttonRef.current) {
             const rect = buttonRef.current.getBoundingClientRect();
-            const menuWidth = 224; // Chiều rộng của menu (w-56 trong tailwind)
+            const menuWidth = 224;
 
             // Đặt vị trí ngay dưới nút bấm và căn lề phải
             setMenuPosition({

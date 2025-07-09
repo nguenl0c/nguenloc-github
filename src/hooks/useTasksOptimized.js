@@ -75,6 +75,107 @@ export function useTasks() {
     [statuses]
   );
 
+  const deleteStatus = useCallback(
+    async (statusIdToDelete) => {
+      // Không cho phép xóa cột cuối cùng
+      if (statuses.length <= 1) {
+        alert("Cannot delete the last column.");
+        return;
+      }
+
+      const statusToDelete = statuses.find((s) => s.id === statusIdToDelete);
+      if (!statusToDelete) return;
+
+      // --- THAY ĐỔI LOGIC TẠI ĐÂY ---
+      // Thay vì tìm cột khác, chúng ta sẽ đặt trạng thái mặc định là "No Status"
+      const fallbackStatusName = "No Status";
+
+      // Lấy danh sách các task cần di chuyển
+      const tasksToMove = tasks.filter((t) => t.status === statusToDelete.name);
+
+      // Hiển thị xác nhận trước khi xóa
+      const isConfirmed = window.confirm(
+        `Are you sure you want to delete the "${statusToDelete.name}" column? ${tasksToMove.length} tasks will be moved to "${fallbackStatusName}".`
+      );
+      if (!isConfirmed) {
+        return;
+      }
+
+      try {
+        // Cập nhật các task liên quan trên server để chuyển về "No Status"
+        await Promise.all(
+          tasksToMove.map((task) =>
+            fetch(`${API_URL}/tasks/${task.id}`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ status: fallbackStatusName }),
+            })
+          )
+        );
+
+        // Xóa status trên server
+        await fetch(`${API_URL}/statuses/${statusIdToDelete}`, {
+          method: "DELETE",
+        });
+
+        // Cập nhật state trên UI
+        setStatuses((prev) => prev.filter((s) => s.id !== statusIdToDelete));
+        setTasks((prev) =>
+          prev.map((task) =>
+            task.status === statusToDelete.name
+              ? { ...task, status: fallbackStatusName }
+              : task
+          )
+        );
+      } catch (err) {
+        console.error("Failed to delete status:", err);
+        alert("Error deleting column. Please try again.");
+      }
+    },
+    [tasks, statuses]
+  );
+
+  const updateStatus = useCallback(async (statusId, newName) => {
+    const oldStatus = statuses.find(s => s.id === statusId);
+    if (!oldStatus || oldStatus.name === newName) return; // Không thay đổi nếu tên giống hệt
+
+    try {
+      // Cập nhật status trên server
+      await fetch(`${API_URL}/statuses/${statusId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: newName }),
+      });
+
+      // Cập nhật các task liên quan trên server
+      const tasksToUpdate = tasks.filter(t => t.status === oldStatus.name);
+      await Promise.all(
+        tasksToUpdate.map(task =>
+          fetch(`${API_URL}/tasks/${task.id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: newName }),
+          })
+        )
+      );
+      
+      // Cập nhật state trên UI
+      setStatuses(prev => prev.map(s => s.id === statusId ? { ...s, name: newName } : s));
+      setTasks(prev => 
+        prev.map(task => 
+          task.status === oldStatus.name 
+            ? { ...task, status: newName } 
+            : task
+        )
+      );
+
+    } catch (err) {
+      console.error("Failed to update status:", err);
+      alert("Error renaming column. Please try again.");
+    }
+  }, [tasks, statuses]);
+
+
   const addTask = useCallback(async (newTaskData) => {
     try {
       const response = await fetch("http://localhost:3004/tasks", {
@@ -210,6 +311,8 @@ export function useTasks() {
     error,
     filters,
     addStatus,
+    deleteStatus,
+    updateStatus,
     addTask,
     deleteTask,
     updateTask,
