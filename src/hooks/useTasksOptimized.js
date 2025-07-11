@@ -86,8 +86,7 @@ export function useTasks() {
       const statusToDelete = statuses.find((s) => s.id === statusIdToDelete);
       if (!statusToDelete) return;
 
-      // --- THAY ĐỔI LOGIC TẠI ĐÂY ---
-      // Thay vì tìm cột khác, chúng ta sẽ đặt trạng thái mặc định là "No Status"
+      // đặt trạng thái mặc định là "No Status"
       const fallbackStatusName = "No Status";
 
       // Lấy danh sách các task cần di chuyển

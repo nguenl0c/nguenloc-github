@@ -1,25 +1,13 @@
 {
   "tasks": [
     {
-      "id": "1",
-      "title": "Tạo giao diện Table View",
-      "assignees": [
-        "Loc",
-        "An"
-      ],
-      "status": "Todo",
-      "priority": "High",
-      "estimate": 3,
-      "size": "M"
-    },
-    {
       "id": "2",
       "title": "Tích hợp Board View (Kanban)",
       "assignees": [
         "Binh"
       ],
       "status": "Todo",
-      "priority": "Medium",
+      "priority": "High",
       "estimate": 5,
       "size": "L"
     },
@@ -85,7 +73,7 @@
       "assignees": [
         "UI Team"
       ],
-      "status": "Done",
+      "status": "Bug",
       "priority": "Low",
       "estimate": 2,
       "size": "S"
@@ -134,7 +122,7 @@
       "assignees": [
         "Tôi đây"
       ],
-      "status": "Bug",
+      "status": "Todo",
       "priority": "High",
       "estimate": 2,
       "size": "XL"

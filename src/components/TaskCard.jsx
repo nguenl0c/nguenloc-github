@@ -1,7 +1,6 @@
 // TaskCard.jsx
 import React, { useState } from "react";
 import { FiClock, FiTrash2 } from "react-icons/fi";
-import CircleIcon from "./CircleIcon"; // Giả sử bạn có file CircleIcon.jsx
 
 export default function TaskCard({ task, onUpdateTask, onDeleteTask }) {
     const [isDragging, setIsDragging] = useState(false);

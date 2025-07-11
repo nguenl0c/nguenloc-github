@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import TaskTable from '../components/TaskTable.jsx';
+import TaskTable from '../components/tableView/TaskTalbe.jsx';
 import TaskBoard from '../components/TaskBoard.jsx';
 import TaskForm from '../components/TaskForm.jsx';
 import ViewSwitcher from '../components/ViewSwitcher.jsx';
@@ -57,9 +57,9 @@ export function Home() {
   return (
     <div className='mx-auto h-screen flex flex-col'>
       {/* Header Section - không co giãn */}
-      <div className='flex-shrink-0 flex flex-col px-4 pt-4 md:flex-row justify-between items-start md:items-center gap-4 mb-6'>
+      <div className='flex-shrink-0 flex flex-col px-4 pt-4 md:flex-row justify-between items-start md:items-center gap-4 mb-4'>
         <div>
-          <h1 className='text-xl font-extraboldd text-gray-900'>nguenl0c's project reactJS</h1>
+          <h1 className='pl-3 text-xl font-extraboldd text-gray-900 self-center'>nguenl0c's project reactJS</h1>
         </div>
 
         <div className='flex items-center gap-4'>
