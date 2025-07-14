@@ -1,6 +1,6 @@
 import React from 'react';
 import EditableCell from './EditableCell';
-import StatusBadge from '../StatusBadge';
+import {StatusBadge} from '../StatusBadge';
 import { PriorityBadge, SizeBadge } from './Badge';
 import Dropdown from '../Dropdown';
 import { FiMoreHorizontal, FiTrash2, FiEdit3 } from 'react-icons/fi';
@@ -84,7 +84,7 @@ export default function TableRow({
                 <div className="flex items-center space-x-2">
                     <button
                         onClick={() => onDeleteTask(task.id)}
-                        className="p-1 text-gray-400 hover:text-red-500 transition-colors"
+                        className="p-1 justify-center text-gray-400 hover:text-red-500 transition-colors"
                         title="Delete task"
                     >
                         <FiTrash2 className="w-4 h-4" />

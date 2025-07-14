@@ -1,12 +1,13 @@
 // src/components/StatusColumn.jsx
-import React, { useState, useRef, useEffect } from "react";
-import { FiClipboard } from "react-icons/fi";
+import { useState, useRef, useEffect } from "react";
+import { FiClipboard, FiTrash, FiEdit2 } from "react-icons/fi";
 import { BsThreeDots } from "react-icons/bs";
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react';
 import TaskCard from "./TaskCard";
-import { getColorClasses } from "../assets/colors"; 
+import {DotStatus} from "./StatusBadge";
 
 export default function StatusColumn({
-  statusObject, // Nhận cả object status
+  statusObject,
   tasks,
   onUpdateTask,
   onDeleteTask,
@@ -15,38 +16,38 @@ export default function StatusColumn({
   onUpdateStatus,
 }) {
   const [isDragOver, setIsDragOver] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [statusName, setStatusName] = useState(statusObject ? statusObject.name : "No Status");
 
-  const menuRef = useRef(null);
   const inputRef = useRef(null);
 
+  // Sync statusName khi statusObject thay đổi
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setIsMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+    if (statusObject) {
+      setStatusName(statusObject.name);
+    }
+  }, [statusObject]);
 
   useEffect(() => {
     if (isEditing) {
       inputRef.current?.focus();
+      inputRef.current?.select();
     }
   }, [isEditing]);
 
   const handleRenameSubmit = () => {
     if (statusName.trim() && statusName.trim() !== statusObject.name) {
-      onUpdateStatus(statusObject.id, statusName.trim());
+      onUpdateStatus && onUpdateStatus(statusObject.id, statusName.trim());
+    } else {
+      setStatusName(statusObject.name); // Reset nếu không có thay đổi
     }
     setIsEditing(false);
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter") handleRenameSubmit();
+    if (e.key === "Enter") {
+      handleRenameSubmit();
+    }
     if (e.key === "Escape") {
       setStatusName(statusObject.name);
       setIsEditing(false);
@@ -66,69 +67,94 @@ export default function StatusColumn({
     e.preventDefault();
     setIsDragOver(false);
     const taskId = e.dataTransfer.getData("text/plain");
-    // Khi thả task, cập nhật status bằng statusName (chuỗi)
     onUpdateTask(taskId, { status: statusName });
   };
 
-  // Lấy class màu từ object, nếu không có thì dùng màu xám
-  const headerColorClasses = statusObject
-    ? getColorClasses(statusObject.color)
-    : getColorClasses("gray");
-
-  const ColumnMenu = ({onDelete, onRename}) => {
-    return (
-      <div className="absolute right-0 top-10 bg-white shadow-lg rounded-md w-48 p-2 z-10">
-        <button
-          onClick={onRename}
-          className="w-full text-left px-4 py-2 hover:bg-gray-100 transition-colors"
-        >
-          Rename
-        </button>
-        <button
-          onClick={onDelete}
-          className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 transition-colors"
-        >
-          Delete Status
-        </button>
-      </div>
-    );
-  }
 
   return (
     <div
-      className={`w-80 h-full min-h-full bg-[#f7f8fa] rounded-lg border border-gray-300 flex flex-col flex-shrink-0 transition-all duration-200  ${isDragOver ? "border-blue-500 bg-blue-50" : ""}`}
+      className={`w-80 h-full min-h-full bg-[#f7f8fa] rounded-lg border border-gray-300 flex flex-col flex-shrink-0 transition-all duration-200 ${
+        isDragOver ? "border-blue-500 bg-blue-50" : ""
+      }`}
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
-      <div className="pt-4 px-3 flex  justify-between items-center">
-        <h3 className="font-semibold text-lg flex items-center gap-2 text-gray-800">
-          {statusName}
-          <span className="text-sm font-normal bg-gray-200 px-2 py-0.5 rounded-full">
-            {tasks.length}
-          </span>
-        </h3>
-        <div
-          className="relative cursor-pointer flex self-start items-center hover:bg-gray-200 transition-all p-1 rounded-md"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-        >
-          <BsThreeDots className="text-gray-600 text-lg font-medium cursor-pointer transition-all" />
-          {isMenuOpen && (
-            <ColumnMenu
-              onDelete={() => {
-                onDeleteStatus && onDeleteStatus(statusObject.id);
-                setIsMenuOpen(false);
-              }}
-              onRename={() => {
-                setIsEditing(true);
-                setIsMenuOpen(false);
-              }}
+      <div className="pt-4 px-3 flex justify-between items-center">
+        {/* Header với editing capability */}
+        {isEditing ? (
+          <div className="flex items-center gap-2 flex-1">
+            <input
+              ref={inputRef}
+              type="text"
+              value={statusName}
+              onChange={(e) => setStatusName(e.target.value)}
+              onKeyDown={handleKeyDown}
+              onBlur={handleRenameSubmit}
+              className="font-semibold text-lg text-gray-800 bg-white border-2 border-blue-500 rounded px-2 py-1 flex-1"
+              maxLength={50}
             />
-          )}
-        </div>
+            <span className="text-sm font-normal bg-gray-200 px-2 py-0.5 rounded-full flex-shrink-0">
+              {tasks.length}
+            </span>
+          </div>
+        ) : (
+          <h3 className="font-semibold text-lg flex items-center gap-2 text-gray-800">
+            <DotStatus statusObject={statusObject}/>
+            <span className="truncate">{statusName}</span>
+            <span className="text-sm font-normal bg-gray-200 px-2 py-0.5 rounded-full flex-shrink-0">
+              {tasks.length}
+            </span>
+          </h3>
+        )}
+
+        {/* Action menu */}
+        {!isEditing && (
+          <Menu as="div" className="relative">
+            <MenuButton className="cursor-pointer flex items-center hover:bg-gray-200 transition-all p-1 rounded-md">
+              <BsThreeDots className="text-gray-500 w-4 h-4" />
+            </MenuButton>
+
+            <MenuItems className="absolute right-0 z-10 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-none data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
+              <div className="py-1">
+                <MenuItem>
+                  {({ focus }) => (
+                    <button
+                      onClick={() => setIsEditing(true)}
+                      className={`${
+                        focus ? 'bg-gray-100' : ''
+                      } flex w-full items-center px-4 py-2 text-sm text-gray-700 transition-colors`}
+                    >
+                      <FiEdit2 className="mr-3 h-4 w-4" />
+                      Edit details
+                    </button>
+                  )}
+                </MenuItem>
+                
+                <MenuItem>
+                  {({ focus }) => (
+                    <button
+                      onClick={() => {
+                        if (onDeleteStatus && statusObject) {
+                          onDeleteStatus(statusObject.id);
+                        }
+                      }}
+                      className={`${
+                        focus ? 'bg-red-50' : ''
+                      } flex w-full items-center px-4 py-2 text-sm text-red-600 transition-colors`}
+                    >
+                      <FiTrash className="mr-3 h-4 w-4" />
+                      Delete
+                    </button>
+                  )}
+                </MenuItem>
+              </div>
+            </MenuItems>
+          </Menu>
+        )}
       </div>
 
-      {/* Vùng hiển thị tasks - flex-1 để chiếm hết không gian còn lại */}
+      {/* Tasks area */}
       <div className="p-2 flex-1 overflow-y-auto">
         {tasks.map((task) => (
           <TaskCard
@@ -146,13 +172,14 @@ export default function StatusColumn({
         )}
       </div>
 
-      {/* Nút Add Task - cố định ở dưới cùng */}
+      {/* Add Task button */}
       <div className="flex-shrink-0">
         <button
           onClick={() => onAddTask && onAddTask(statusName)}
-          className="w-full p-2 text-gray-600  hover:bg-gray-200 transition-all flex items-center justify-start gap-2"
+          className="w-full p-2 text-gray-600 hover:bg-gray-200 transition-all flex items-center justify-start gap-2"
+          disabled={isEditing}
         >
-          <span className=" pl-2 text-sm font-medium">+ Add Task</span>
+          <span className="pl-2 text-sm font-medium">+ Add Task</span>
         </button>
       </div>
     </div>

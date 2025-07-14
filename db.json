@@ -62,7 +62,7 @@
       "assignees": [
         "Frontend Team"
       ],
-      "status": "Bug",
+      "status": "Bugg",
       "priority": "Medium",
       "estimate": 3,
       "size": "M"
@@ -73,7 +73,7 @@
       "assignees": [
         "UI Team"
       ],
-      "status": "Bug",
+      "status": "Bugg",
       "priority": "Low",
       "estimate": 2,
       "size": "S"
@@ -98,7 +98,7 @@
         "Hoàng",
         "Long"
       ],
-      "status": "Bug",
+      "status": "Bugg",
       "priority": "High",
       "estimate": 3,
       "size": "S"
@@ -146,7 +146,7 @@
     },
     {
       "id": "de1f",
-      "name": "Bug",
+      "name": "Bugg",
       "color": "red"
     }
   ]
