@@ -1,99 +1,68 @@
+// src/components/TableRow.jsx
 import React from 'react';
 import EditableCell from './EditableCell';
 import {StatusBadge} from '../StatusBadge';
-import { PriorityBadge, SizeBadge } from './Badge';
 import Dropdown from '../Dropdown';
-import { FiMoreHorizontal, FiTrash2, FiEdit3 } from 'react-icons/fi';
+import { PriorityBadge, SizeBadge } from './Badge';
+import { FiMoreHorizontal, FiTrash2 } from 'react-icons/fi';
 
-export default function TableRow({
-    task,
-    index,
-    statuses,
-    onUpdateTask,
-    onDeleteTask,
-    priorityOptions,
-    sizeOptions
-}) {
+// Component này sẽ render một ô dựa trên key của cột
+const renderCellContent = (task, columnKey, props) => {
+    const { statuses, onUpdateTask, priorityOptions, sizeOptions } = props;
     const taskStatusObject = statuses.find(s => s.name === task.status);
 
-    return (
-        <tr className="bg-white hover:bg-gray-50 transition-colors border-b border-gray-200">
-            <td className="px-2 py-1 text-sm text-gray-500 w-12 text-right">
-                {index + 1}
-            </td>
-
-            <td className="px-2 py-1 border-r border-gray-200">
-                <div className="text-sm font-medium text-gray-900 truncate max-w-xs">
-                    {task.title}
-                </div>
-            </td>
-
-            <td className="px-2 py-1 border-r border-gray-200">
-                <EditableCell
-                    value={task.assignees}
-                    field="assignees"
-                    task={task}
-                    onUpdate={onUpdateTask}
-                />
-            </td>
-
-            <td className="px-2 py-1 border-r border-gray-200">
+    switch (columnKey) {
+        case 'title':
+            return <div className="text-sm font-medium text-gray-900 truncate max-w-xs">{task.title}</div>;
+        case 'assignees':
+            return <EditableCell value={task.assignees} field="assignees" task={task} onUpdate={onUpdateTask} />;
+        case 'status':
+            return (
                 <div className="flex items-center justify-between">
                     <StatusBadge statusObject={taskStatusObject} />
-                    <Dropdown
-                        options={statuses.map(s => s.name)}
-                        onValueChange={(newValue) => onUpdateTask(task.id, { status: newValue })}
-                        triggerIcon={<FiMoreHorizontal className="size-4" />}
-                    />
+                    <Dropdown options={statuses.map(s => s.name)} onValueChange={(newValue) => onUpdateTask(task.id, { status: newValue })} triggerIcon={<FiMoreHorizontal />} />
                 </div>
-            </td>
-
-            <td className="px-2 py-1 border-r border-gray-200">
+            );
+        case 'priority':
+            return (
                 <div className="flex items-center justify-between">
                     <PriorityBadge priority={task.priority} />
-                    <Dropdown
-                        options={priorityOptions}
-                        onValueChange={(newValue) => onUpdateTask(task.id, { priority: newValue })}
-                        triggerIcon={<FiMoreHorizontal className="w-4 h-4" />}
-                    />
+                    <Dropdown options={priorityOptions} onValueChange={(newValue) => onUpdateTask(task.id, { priority: newValue })} triggerIcon={<FiMoreHorizontal />} />
                 </div>
-            </td>
-
-            <td className="px-4 py-1 border-r border-gray-200">
-                <EditableCell
-                    value={task.estimate}
-                    field="estimate"
-                    task={task}
-                    onUpdate={onUpdateTask}
-                    className="text-center"
-                />
-            </td>
-
-            <td className="px-2 py-1 border-r border-gray-200">
+            );
+        case 'estimate':
+            return <EditableCell value={task.estimate} field="estimate" task={task} onUpdate={onUpdateTask} className="text-center" />;
+        case 'size':
+            return (
                 <div className="flex items-center justify-between">
                     <SizeBadge size={task.size} />
-                    <Dropdown
-                        options={sizeOptions}
-                        onValueChange={(newValue) => onUpdateTask(task.id, { size: newValue })}
-                        triggerIcon={<FiMoreHorizontal className="w-4 h-4" />}
-                    />
+                    <Dropdown options={sizeOptions} onValueChange={(newValue) => onUpdateTask(task.id, { size: newValue })} triggerIcon={<FiMoreHorizontal />} />
                 </div>
-            </td>
+            );
+        default:
+            return null;
+    }
+};
 
-            <td className="px-2 py-1 ">
-                <div className="flex items-center space-x-2">
-                    <button
-                        onClick={() => onDeleteTask(task.id)}
-                        className="p-1 justify-center text-gray-400 hover:text-red-500 transition-colors"
-                        title="Delete task"
-                    >
-                        <FiTrash2 className="w-4 h-4" />
-                    </button>
-                </div>
+export default function TableRow({ task, index, columns, ...props }) {
+    const { onDeleteTask } = props;
+    return (
+        <tr className="bg-white hover:bg-gray-50 transition-colors border-b border-gray-200">
+            {/* Cột Index cố định */}
+            <td className="px-4 text-sm text-gray-500 w-12 text-center">{index + 1}</td>
+
+            {/* Render các ô theo đúng thứ tự của `columns` */}
+            {columns.map(column => (
+                <td key={column.key} className="px-2 py-0.5 border-r border-gray-200">
+                    {renderCellContent(task, column.key, props)}
+                </td>
+            ))}
+
+            {/* Cột Actions và Cột Filler */}
+            <td className="px-2">
+                <button onClick={() => onDeleteTask(task.id)} className="p-1 text-left text-gray-400 hover:text-red-500"><FiTrash2 /></button>
             </td>
-            <td>
-                {/* cột để lấp khoảng trống */}
-            </td>
+            <td></td>
         </tr>
     );
 }

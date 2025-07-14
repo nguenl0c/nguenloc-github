@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { IoIosSearch } from "react-icons/io";
+import { FaCaretDown } from "react-icons/fa";
 
 export default function TaskFilters({
   onFilterChange,
   onSearchChange,
-  taskStats,
+  statuses = [],
 }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
@@ -60,21 +61,25 @@ export default function TaskFilters({
 
         {/* Status Filter */}
         <div className="min-w-36">
+            
           <select
+            
             value={statusFilter}
             onChange={handleStatusFilterChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
+          > 
             <option value="all">All Status</option>
-            <option value="Todo">Todo</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Done">Done</option>
+            {statuses.map(status => (
+              <option key={status.id || status.name} value={status.name}>
+                {status.name}
+              </option>
+            ))}
           </select>
         </div>
 
         {/* Priority Filter */}
         <div className="min-w-36">
-          <select
+          <select 
             value={priorityFilter}
             onChange={handlePriorityFilterChange}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"

@@ -1,9 +1,8 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 // import { tasks as initialTasks } from '../data/tasks.js';
 
 const API_URL = "http://localhost:3004";
 
-// Giả sử bạn cũng có thể lưu và tải statuses từ API trong tương lai
 // const STATUS_API_URL = "http://localhost:3004/statuses";
 
 export function useTasks() {
@@ -244,7 +243,7 @@ export function useTasks() {
 
       }
     },
-    [API_URL]
+    []
   );
 
   //fILLER
@@ -291,15 +290,22 @@ export function useTasks() {
 
   const getTaskStats = () => {
     const filteredTasks = getFilteredTasks();
-    const todo = filteredTasks.filter((task) => task.status === "Todo").length;
-    const inProgress = filteredTasks.filter(
-      (task) => task.status === "In Progress"
-    ).length;
-    const done = filteredTasks.filter((task) => task.status === "Done").length;
+    
+    
+    const statusStats = {};
+    statuses.forEach(status => {
+      const statusKey = status.name.toLowerCase().replace(/\s+/g, '');
+      statusStats[statusKey] = filteredTasks.filter(task => task.status === status.name).length;
+    });
+
     const total = tasks.length;
     const filtered = filteredTasks.length;
 
-    return { todo, inProgress, done, total, filtered };
+    return { 
+      ...statusStats, 
+      total, 
+      filtered 
+    };
   };
 
   return {

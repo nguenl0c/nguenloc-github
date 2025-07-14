@@ -62,7 +62,7 @@
       "assignees": [
         "Frontend Team"
       ],
-      "status": "Bugg",
+      "status": "Buggg",
       "priority": "Medium",
       "estimate": 3,
       "size": "M"
@@ -73,7 +73,7 @@
       "assignees": [
         "UI Team"
       ],
-      "status": "Bugg",
+      "status": "Buggg",
       "priority": "Low",
       "estimate": 2,
       "size": "S"
@@ -98,7 +98,7 @@
         "Hoàng",
         "Long"
       ],
-      "status": "Bugg",
+      "status": "Buggg",
       "priority": "High",
       "estimate": 3,
       "size": "S"
@@ -120,12 +120,37 @@
       "title": "fomo",
       "description": "",
       "assignees": [
-        "Tôi đây"
+        "Anna"
       ],
       "status": "Todo",
       "priority": "High",
       "estimate": 2,
       "size": "XL"
+    },
+    {
+      "id": "4adc",
+      "title": "Test Form",
+      "description": "",
+      "assignees": [
+        "Lộc"
+      ],
+      "status": "New Column",
+      "priority": "Low",
+      "estimate": 3,
+      "size": "M"
+    },
+    {
+      "id": "5ee0",
+      "title": "Hair Cut",
+      "description": "",
+      "assignees": [
+        "Phúc",
+        "Hưng"
+      ],
+      "status": "In Progress",
+      "priority": "Medium",
+      "estimate": 1,
+      "size": "M"
     }
   ],
   "statuses": [
@@ -146,8 +171,13 @@
     },
     {
       "id": "de1f",
-      "name": "Bugg",
+      "name": "Buggg",
       "color": "red"
+    },
+    {
+      "id": "6fe7",
+      "name": "New Column",
+      "color": "indigo"
     }
   ]
 }

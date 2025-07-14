@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { IoIosArrowDown } from "react-icons/io";
+import { FaCaretDown } from "react-icons/fa";
 
 export default function Dropdown({ options, onValueChange }) {
     const [isOpen, setIsOpen] = useState(false);
@@ -96,7 +96,7 @@ export default function Dropdown({ options, onValueChange }) {
                 onClick={handleToggle}
                 className="p-1 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-                <IoIosArrowDown />
+                <FaCaretDown className="text-xs text-gray-700" />
             </button>
 
             {isOpen && <DropdownMenu />}

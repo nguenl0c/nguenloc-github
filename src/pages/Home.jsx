@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import TaskTable from '../components/tableView/TaskTalbe.jsx';
 import TaskBoard from '../components/TaskBoard.jsx';
 import TaskForm from '../components/TaskForm.jsx';
@@ -85,6 +85,7 @@ export function Home() {
         <TaskFilters
           onFilterChange={handleFilterChange}
           onSearchChange={handleSearchChange}
+          statuses={statuses}
         />
       </div>
 

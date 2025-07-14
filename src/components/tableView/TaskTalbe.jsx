@@ -17,6 +17,8 @@ const TABLE_COLUMNS = [
 ];
 
 export default function TaskTable({ tasks = [], statuses = [], onDeleteTask, onUpdateTask }) {
+    const [columns, setColumns] = useState(TABLE_COLUMNS);
+
     const [columnWidths, setColumnWidths] = useState({
         index: 60,
         title: 300,
@@ -77,7 +79,19 @@ export default function TaskTable({ tasks = [], statuses = [], onDeleteTask, onU
         document.removeEventListener("mouseup", handleMouseUp);
     };
 
-    const totalWidth = Object.values(columnWidths).reduce((sum, width) => sum + width, 0) + 60;
+    const handleColumnReorder = (draggedColumnKey, targetColumnKey) => {
+        if (draggedColumnKey === targetColumnKey) return;
+
+        const draggedIndex = columns.findIndex(col => col.key === draggedColumnKey);
+        const targetIndex = columns.findIndex(col => col.key === targetColumnKey);
+
+        const newColumns = [...columns];
+        const [draggedItem] = newColumns.splice(draggedIndex, 1);
+        newColumns.splice(targetIndex, 0, draggedItem);
+
+        setColumns(newColumns);
+    };
+
 
     return (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
@@ -89,9 +103,10 @@ export default function TaskTable({ tasks = [], statuses = [], onDeleteTask, onU
                     // style={{ width: `${totalWidth}px` }}
                 >
                     <TableHeader
-                        columns={TABLE_COLUMNS}
+                        columns={columns}
                         columnWidths={columnWidths}
                         onMouseDown={handleMouseDown}
+                        onColumnReorder={handleColumnReorder}
                     />
 
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -101,6 +116,7 @@ export default function TaskTable({ tasks = [], statuses = [], onDeleteTask, onU
                                     key={task.id}
                                     task={task}
                                     index={index}
+                                    columns={columns}
                                     statuses={statuses}
                                     onUpdateTask={onUpdateTask}
                                     onDeleteTask={onDeleteTask}

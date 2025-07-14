@@ -29,10 +29,9 @@ export default function TaskTable({ tasks = [], statuses = [], onDeleteTask, onU
   // Tính tổng width của table
   const totalWidth = Object.values(columnWidths).reduce(
     (sum, width) => sum + width,
-    0
+    
   );
-
-  //Tạo thêm state để quản lý việc chỉnh sửa ô
+  
   const [editingCell, setEditingCell] = useState(null);
   const [editValue, setEditValue] = useState("");
 
@@ -75,7 +74,7 @@ export default function TaskTable({ tasks = [], statuses = [], onDeleteTask, onU
   // --- CÁC HÀM XỬ LÝ MỚI ---
   const handleDoubleClick = (task, field) => {
     setEditingCell({ taskId: task.id, field });
-    // Đối với mảng assignees, ta join lại để chỉnh sửa
+    //mảng assignees, ta join lại để chỉnh sửa
     const currentValue =
       field === "assignees" ? task.assignees.join(", ") : task[field];
     setEditValue(currentValue);
